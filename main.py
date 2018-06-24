@@ -1,55 +1,66 @@
 from flask import Flask, request, redirect
+from caesar import rotate_string
 import cgi
 
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
 
-page_header = """
+form = """
 <!DOCTYPE html>
 <html>
     <head>
         <title>Rotate it!</title>
         <style> 
-        form {
-            background-color: #eee;
-            padding: 20px;
-            margin: 0 auto;
-            width: 540px;
-            font: 16px sans-serif;
-            border-radius: 10px;
-            }
-        textarea {
-            margin: 10px 0;
-            width: 540px;
-            height: 120px;
-            }
+         form {{
+                background-color: #eee;
+                padding: 20px;
+                margin: 0 auto;
+                width: 540px;
+                font: 16px sans-serif;
+                border-radius: 10px;
+            }}
+            textarea {{
+                margin: 10px 0;
+                width: 540px;
+                height: 120px;
+            }}
         </style>
     </head>
     <body>
-"""
-add_form = """
-    <form action="/rotate" method="post">
-        <label>
+
+    <form action="/" method="post">
+        <label> 
             Rotate by:
-            <input type="number" name="rot" value="0"/>
+            <input type="text" name="rot" value="0"/>
         </label>
         <br>
-            <textarea name="some_text_to_rot" form="user_form">Enter text here</textarea> 
+            <textarea name="text">{0}</textarea> 
         <br>
             <input type="submit" value="Submit Query"/>  
+    </form>
     </body>
 </html>
 """
 
 @app.route("/")
 def index():
-    content = add_form + page_header
+    empty = ''
+    content = form.format(empty)
     return content
     
-app.run()
+@app.route("/", methods=['POST'])
+def encrypt():
+    textt = request.form["text"]
+    rott = int(request.form["rot"])
 
-#@app.route("/rotated")
+    encrypty = rotate_string(textt, rott)
+    #print(encrypty)
+    content= form.format(encrypty) 
+    return content
+    print(form)
+
+app.run()
 
 
 

@@ -1,8 +1,5 @@
-<script src="https://gist.github.com/chrisbay/496880de24bba4f532ed03211eff7294.js"></script>
-  
- Code  Revisions 1  Stars 1  Forks 1
-For Web Caesar assignment
- caesar.py
+
+
 def alphabet_position(character):
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     lower = character.lower()
@@ -42,4 +39,3 @@ def rotate_string(text, rot):
             rotated = rotated + char
 
     return rotated
- 
